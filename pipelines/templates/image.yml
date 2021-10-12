@@ -1,0 +1,55 @@
+parameters:
+  env: ''
+  azure_sub: ''
+  name: ''
+
+steps:
+- task: AzureCLI@2
+  displayName: Build Docker Image
+  inputs:
+    azureSubscription: ${{parameters.azure_sub}} 
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+        RESOURCE_GROUP_NAME=${{parameters.name}}${{parameters.env}}
+        ARM_SUBSCRIPTION_ID=$(az account show --query id --out tsv)
+        if (az acr repository list --name $RESOURCE_GROUP_NAME) then
+          echo "repository found."
+        else
+          echo "Creating ACR repo"
+          az acr create --name $RESOURCE_GROUP_NAME --sku basic -g $RESOURCE_GROUP_NAME
+        fi
+        az account set --subscription $ARM_SUBSCRIPTION_ID
+        az configure --defaults acr=${RESOURCE_GROUP_NAME}
+
+        echo "building docker image"
+
+        az acr build -t ghrunner:latest ./ghrdocker
+- task: AzureCLI@2
+  displayName: Build Helm Package
+  inputs:
+    azureSubscription: ${{parameters.azure_sub}} 
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+        RESOURCE_GROUP_NAME=${{parameters.name}}${{parameters.env}}
+        ARM_SUBSCRIPTION_ID=$(az account show --query id --out tsv)
+        az account set --subscription $ARM_SUBSCRIPTION_ID
+        az configure --defaults acr=${RESOURCE_GROUP_NAME}
+        az acr helm repo add
+
+        curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+        chmod 700 get_helm.sh
+        ./get_helm.sh
+
+        helm init 
+        az acr helm repo add
+        helm package ./ghr
+        
+        echo "pushing runner to helm"
+
+        az acr helm push --force ./ghrunner-0.1.0.tgz
+
+        helm repo update
+        az acr helm list
+
