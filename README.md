@@ -5,13 +5,6 @@ This repo provides instructions and configuration to setup Self Hosted Agents fo
 
 ## Setup
 
-1. Create an Azure DevOps (ADO) project, and clone or fork this repo into it
-    - Make sure you enable the **Multi-stage pipelines** preview feature for your user or your org  by following the directions [here](https://docs.microsoft.com/en-us/azure/devops/project/navigation/preview-features?view=azure-devops) 
----
-2. Create an Azure Resource Manager **Service connection** in Azure DevOps
----
-3. Run the manual setup script **./manual.sh** from [Azure CLI](https://docs.microsoft.com/en-us/azure/cloud-shell/quickstart) or [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install-win10) on your wokstation. 
-
 Syntax: **./manual.sh** [-s applicationId] [-p password]
 
 This script does the following:
@@ -19,7 +12,7 @@ This script does the following:
     - Save service principal and other provided variables in keyvault
     - Authorize the selected SPN in keyvault
     
-   This command will ask for your Azure subscription id, as well as the name (arbitrary string of your choice), env (arbitrary string of your choice), location (valid Azure region) for your AKS cluster, the name of your azure devops organization, name of the pool and Azure token.
+   This command will ask for your Azure subscription id, as well as the name (arbitrary string of your choice), env (arbitrary string of your choice), location (valid Azure region) for your AKS cluster, the name of your .................
 ---
 4. Create a variable group named "ado-kv" and associate it with the key vault you just created:
    - Toggle **Link secrets from an Azure key vault as variables**
