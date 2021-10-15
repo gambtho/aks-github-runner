@@ -35,6 +35,8 @@ resources: {}
 ghr:
   repo_owner: "gambtho"
   repo_name: "aks-github-runner"
+  repo_url: "https://github.com/gambtho/aks-github-runner"
+  github_token: ""
 
 autoscaling:
   enabled: true

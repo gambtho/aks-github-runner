@@ -50,5 +50,4 @@ steps:
             --set azp.pool=${ADO_POOL} \
             --set image.repository=${RESOURCE_GROUP_NAME}.azurecr.io/azpagent 
 
-        # kubectl apply -f ../config/kured.yaml
 

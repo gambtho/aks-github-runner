@@ -33,6 +33,11 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              name: ghr-config
+          - secretRef:
+              name: ghr-secret
           lifecycle:
             preStop:
               exec:
@@ -83,18 +88,3 @@ spec:
           hostPath:
             path: /var/run/docker.sock
             type: File
-
-
-# envFrom:
-# - configMapRef:
-#     name: runner-k8s-config
-# - secretRef:
-#     name: runner-k8s-secret
-
-# $ kubectl create secret generic runner-k8s-secret --from-literal=GITHUB_TOKEN=$GITHUB_TOKEN
-# $ kustomize edit set image gcr.io/PROJECT_ID/runner:latest=gcr.io/$PROJECT_ID/runner:latest
-# $ cat > runner.env  << EOF
-# REPO_OWNER=${REPO_OWNER}
-# REPO_NAME=${REPO_NAME}
-# ACTIONS_RUNNER_INPUT_URL=${REPO_URL}
-# EOF
