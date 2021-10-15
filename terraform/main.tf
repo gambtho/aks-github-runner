@@ -41,17 +41,11 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 }
 
 resource "azurerm_container_registry" "acr" {
-  count               = var.create_acr ? 1 : 0
   name                = var.cluster_name
   location            = data.azurerm_resource_group.group.location
   resource_group_name = data.azurerm_resource_group.group.name
   sku                 = "Basic"
   admin_enabled       = false
-}
-
-variable "create_acr" {
-  type    = bool
-  default = true
 }
 
 variable "resource_group_name" {

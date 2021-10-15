@@ -8,6 +8,9 @@ image:
   repository: thgamble1014.azurecr.io/ghrunner
   pullPolicy: IfNotPresent
 
+ingress:
+  enabled: false
+
 serviceAccount:
   create: true
   annotations: {}
@@ -36,7 +39,7 @@ ghr:
   repo_owner: "gambtho"
   repo_name: "aks-github-runner"
   repo_url: "https://github.com/gambtho/aks-github-runner"
-  github_token: ""
+  github_token: "secret"
 
 autoscaling:
   enabled: true

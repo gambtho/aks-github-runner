@@ -76,7 +76,6 @@ ACCOUNT_KEY=$(az storage account keys list --resource-group $resource_group_name
 # Create blob container
 az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOUNT_NAME --account-key $ACCOUNT_KEY &> /dev/null
 
-
 # gh secret set
 echo "Saving secrets to github"
 gh secret set "CLUSTER_NAME" -b $cluster_name
@@ -89,19 +88,19 @@ gh secret set "ARM_CLIENT_SECRET" -b $ARM_CLIENT_SECRET
 gh secret set "ARM_SUBSCRIPTION_ID" -b $subscription
 gh secret set "ARM_TENANT_ID" -b $ARM_TENANT_ID
 
-echo "____________________________________________________________"
-echo "____________________________________________________________"
-echo "the following should be passed to the action"
-echo "CLUSTER_NAME: $cluster_name";
-echo "RESOURCE_GROUP_NAME: $resource_group_name";
-echo "STORAGE_ACCOUNT_NAME: $STORAGE_ACCOUNT_NAME"
-echo "STORAGE_CONTAINER_NAME: $CONTAINER_NAME"
-echo "STORAGE_ACCESS_KEY: $ACCOUNT_KEY"
-echo "ARM_CLIENT_ID: $ARM_CLIENT_ID"
-echo "ARM_CLIENT_SECRET: $ARM_CLIENT_SECRET"
-echo "ARM_SUBSCRIPTION_ID: $subscription"
-echo "ARM_TENANT_ID: $ARM_TENANT_ID"
+# echo "____________________________________________________________"
+# echo "____________________________________________________________"
+# echo "CLUSTER_NAME: $cluster_name";
+# echo "RESOURCE_GROUP_NAME: $resource_group_name";
+# echo "STORAGE_ACCOUNT_NAME: $STORAGE_ACCOUNT_NAME"
+# echo "STORAGE_CONTAINER_NAME: $CONTAINER_NAME"
+# echo "STORAGE_ACCESS_KEY: $ACCOUNT_KEY"
+# echo "ARM_CLIENT_ID: $ARM_CLIENT_ID"
+# echo "ARM_CLIENT_SECRET: $ARM_CLIENT_SECRET"
+# echo "ARM_SUBSCRIPTION_ID: $subscription"
+# echo "ARM_TENANT_ID: $ARM_TENANT_ID"
 
+# below is only needed if running locally, and not as part of a workflow
 export RESOURCE_GROUP_NAME=$resource_group_name
 export ARM_CLIENT_ID=$ARM_CLIENT_ID
 export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
