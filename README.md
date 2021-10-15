@@ -31,13 +31,6 @@ If running locally:
 
 This uses the repo makefile to create your AKS cluster, create an ACR, and deploy the runner to the cluster
 
-
-## Possible additions
-
-- Instructions for workflow
-- Add 2nd nodepool, with windows agents?
-- Add cluster/pod autoscale
-
 ## Contributions
 
 This repo is a work in progress, pull requests and suggestions are greatly appreciated
@@ -46,4 +39,15 @@ This repo is a work in progress, pull requests and suggestions are greatly appre
 
 Thomas Gamble thgamble@microsoft.com
 
+## Next steps
+
+- dynamically set repo owner/repo name
+- check for GITHUB_TOKEN before deploying
+- remove helm install note
+- check for all other variables in makefile
+- add workflow / instructions
+- Validate setup for an organization
+- Multiple node pool
+- Cluster autoscaling
+- Virtual nodes?
 
