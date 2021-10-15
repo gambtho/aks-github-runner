@@ -13,7 +13,7 @@ Ensure you have the following dependencies:
 - azure-cli (logged in)
 - github-cli (logged in)
 
-Create a github PAT -- and export the value -- export GITHUB_TOKEN=<<YOUR TOKEN>>
+Create a github PAT -- and export the value -- export GITHUB_TOKEN=paste_your_token_here
 
 Run the setup.sh script
 - Syntax: **. ./setup.sh** [-c CLUSTER_NAME] [-g RESOURCE_GROUP_NAME] [-s SUBSCRIPTION_ID] [-r REGION]
