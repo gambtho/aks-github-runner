@@ -33,22 +33,6 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            - name: GHR_URL
-              valueFrom:
-                secretKeyRef:
-                  name: ghr
-                  key: url
-            - name: GHR_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: ghr
-                  key: token
-            - name: GHR_POOL
-              valueFrom:
-                secretKeyRef:
-                  name: ghr
-                  key: pool
           lifecycle:
             preStop:
               exec:
@@ -56,7 +40,7 @@ spec:
                   [
                     "/bin/bash",
                     "-c",
-                    'RUNNER_ALLOW_RUNASROOT=1 ./config.sh remove --token $(curl -sS --request POST --url "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/runners/remove-token" --header "authorization: Bearer ${GITHUB_TOKEN}"  --header "content-type: application/json" | jq -r .token)',
+                    'RUNNER_ALLOW_RUNASROOT=1 ./config.sh remove --token $(curl -sS --request POST --url "https://api.github.com/repos/${repo_owner}/${repo_name}/actions/runners/remove-token" --header "authorization: Bearer ${GITHUB_TOKEN}"  --header "content-type: application/json" | jq -r .token)',
                   ]   
           ports:
             - name: https
@@ -99,3 +83,18 @@ spec:
           hostPath:
             path: /var/run/docker.sock
             type: File
+
+
+# envFrom:
+# - configMapRef:
+#     name: runner-k8s-config
+# - secretRef:
+#     name: runner-k8s-secret
+
+# $ kubectl create secret generic runner-k8s-secret --from-literal=GITHUB_TOKEN=$GITHUB_TOKEN
+# $ kustomize edit set image gcr.io/PROJECT_ID/runner:latest=gcr.io/$PROJECT_ID/runner:latest
+# $ cat > runner.env  << EOF
+# REPO_OWNER=${REPO_OWNER}
+# REPO_NAME=${REPO_NAME}
+# ACTIONS_RUNNER_INPUT_URL=${REPO_URL}
+# EOF

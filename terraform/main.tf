@@ -61,3 +61,18 @@ variable "resource_group_name" {
 variable "cluster_name" {
   type = string
 }
+
+variable "agents_size" {
+  type = string
+  default = "Standard_D2_v2"
+}
+
+variable "agents_count" {
+  type = string
+  default = "2"
+}
+
+variable "kubernetes_version" {
+  type = string
+  default = "1.21.2"
+}
