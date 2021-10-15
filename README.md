@@ -44,7 +44,7 @@ Thomas Gamble thgamble@microsoft.com
 - dynamically set repo owner/repo name
 - check for GITHUB_TOKEN before deploying
 - remove helm install note
-- check for all other variables in makefile
+- check for all other variables in makefile (gh secret get?)
 - add workflow / instructions
 - Validate setup for an organization
 - Multiple node pool
